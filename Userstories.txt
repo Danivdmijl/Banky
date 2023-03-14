@@ -2,3 +2,5 @@ Als gebruiker wil ik een optie hebben om transacties prive te houden voor als ik
 
 Als gebruiker wil ik van rekening kunne veranderen zodat ik meerdere rekening in 1 app tot mijn beschikking heb.
 
+Als gebruiker wil ik mijn huidige saldo kunnen zien zodat ik er van op de hoogte blijf hoeveel geld ik op het moment heb.
+
