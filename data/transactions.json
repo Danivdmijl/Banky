@@ -1,0 +1,30 @@
+{
+    "Bankrekening": [
+        {
+            "from/to": "Dani",
+            "amouth": 10
+        },
+        {
+            "from/to": "Ian",
+            "amouth": 100
+        },
+        {
+            "from/to": "Danilo",
+            "amouth": -100
+        },
+        {
+            "from/to": "Jeroen",
+            "amouth": -20
+        }
+    ],
+    "ZZP-Rekening": [
+        {
+            "from/to": "Bedrijf X",
+            "amouth": 10000
+        },
+        {
+            "from/to": "Bedrijf Z",
+            "amouth": -500
+        }
+    ]
+}
