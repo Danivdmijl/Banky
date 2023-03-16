@@ -7,6 +7,7 @@ class GetDataFromApi {
     }
 
     async getData() {
+        console.log("Ik haal de data op");
         await fetch(this.url)
             .then(function (response) {
                 return response.json();
@@ -16,9 +17,6 @@ class GetDataFromApi {
         return this.data;
     }
 }
-
-// const dani = new GetDataFromApi("/data/transactions.json");
-// dani.getData().then(function(data){ console.log(data)})
 
 class Header {
     headerElement;
@@ -72,24 +70,28 @@ class Header {
     }
 }
 
-const header = new Header("body");
-header.render();
-
-
 class BankyMain {
-   placeToRenderBankyMain;
-   leftSection;
-   rightSection;
+    placeToRenderBankyMain;
+    leftSection;
+    rightSection;
 
     constructor(placeToRenderBankyMain) {
         this.placeToRenderBankyMain = document.getElementsByTagName(placeToRenderBankyMain)[0];
 
         this.mainElement = document.createElement("main");
         this.mainElement.classList = "banky";
-        
+
         this.leftSection = new BankyLeftSection(this.mainElement);
         this.rightSection = new BankyRightSection(this.mainElement);
 
+    }
+
+    makeButtonsFromData(data) {
+        this.rightSection.makeButtonsFromData(data);
+    }
+
+    makeTransactionsFromData(data) {
+        this.leftSection.makeTransactionsFromData("Bankrekening", data);
     }
 
     render() {
@@ -132,21 +134,40 @@ class BankyLeftSection {
 
         this.transactionsElement = document.createElement("ul");
         this.transactionsElement.classList = "banky__transactions";
+    }
 
-        this.transactionElement = document.createElement("li");
-        this.transactionElement.classList = "banky__transaction";
+    makeTransactionsFromData(accountToShow, data) {
+        let totalMoney = 0;
+        for (let i = 0; i < data[accountToShow].length; i++){
+            totalMoney += data[accountToShow][i]["amouth"];
+        }
 
-        this.transactionFrom = document.createElement("h3");
-        this.transactionFrom.classList = "banky__name";
-        this.transactionFrom.innerText = "Dani";
+        
+        this.bankyLogoText.innerText = "Saldo " + "€" + totalMoney;
 
-        this.transactionAmount = document.createElement("h3");
-        this.transactionAmount.classList = "banky__amount";
-        this.transactionAmount.innerText = "+10";
+
+        for (let i = 0; i < data[accountToShow].length; i++) {
+            this.transactionElement = document.createElement("li");
+            this.transactionElement.classList = "banky__transaction";
+
+            this.transactionFrom = document.createElement("h3");
+            this.transactionFrom.classList = "banky__name";
+            this.transactionFrom.innerText = data[accountToShow][i]["from/to"];
+
+            this.transactionAmount = document.createElement("h3");
+            this.transactionAmount.classList = "banky__amount";
+            this.transactionAmount.innerText = data[accountToShow][i]["amouth"];
+
+            this.transactionsElement.appendChild(this.transactionElement);
+            this.transactionElement.appendChild(this.transactionFrom);
+            this.transactionElement.appendChild(this.transactionAmount);
+        }
 
         this.transferButton = document.createElement("button");
         this.transferButton.classList = "banky__transferButton";
         this.transferButton.innerText = "Overboeken";
+        this.leftSectionElement.appendChild(this.transferButton);
+
     }
     render() {
         this.mainElement.appendChild(this.leftSectionElement);
@@ -159,10 +180,6 @@ class BankyLeftSection {
         this.eyeButton.appendChild(this.eyeFigure);
         this.eyeFigure.appendChild(this.eyeI);
         this.leftSectionElement.appendChild(this.transactionsElement);
-        this.transactionsElement.appendChild(this.transactionElement);
-        this.transactionElement.appendChild(this.transactionFrom);
-        this.transactionElement.appendChild(this.transactionAmount);
-        this.leftSectionElement.appendChild(this.transferButton);
     }
 }
 
@@ -176,53 +193,80 @@ class BankyRightSection {
         this.bankyAccountsElement = document.createElement("ul");
         this.bankyAccountsElement.classList = "banky__accounts";
 
-        this.BankyAccountElement = document.createElement("li");
-        this.BankyAccountElement.classList = "banky__account";
+        // this.BankyAccountElement2 = document.createElement("li");
+        // this.BankyAccountElement2.classList = "banky__account";
 
-        this.SwitchAccountButtonElement = document.createElement("button");
-        this.SwitchAccountButtonElement.classList = "banky__switchAccount";
+        // this.SwitchAccountButtonElement2 = document.createElement("button");
+        // this.SwitchAccountButtonElement2.classList = "banky__switchAccount";
 
-        this.BankyRightLogoElement = document.createElement("figure");
-        this.BankyRightLogoElement.classList = "banky__logo";
+        // this.BankyRightLogoElement2 = document.createElement("figure");
+        // this.BankyRightLogoElement2.classList = "banky__logo";
 
-        this.BankyRightLogoIconElement = document.createElement("i");
-        this.BankyRightLogoIconElement.classList = "fa-solid fa-house";
+        // this.BankyRightLogoIconElement2 = document.createElement("i");
+        // this.BankyRightLogoIconElement2.classList = "fa-solid fa-mug-hot";
 
-        this.BankyBankrekeningElement = document.createElement("h4");
-        this.BankyBankrekeningElement.classList = "banky__nameOfAccount";
-        this.BankyBankrekeningElement.innerText = "Bankrekening";
-
-        this.BankyAccountElement2 = document.createElement("li");
-        this.BankyAccountElement2.classList = "banky__account";
-
-        this.SwitchAccountButtonElement2 = document.createElement("button");
-        this.SwitchAccountButtonElement2.classList = "banky__switchAccount";
-
-        this.BankyRightLogoElement2 = document.createElement("figure");
-        this.BankyRightLogoElement2.classList = "banky__logo";
-
-        this.BankyRightLogoIconElement2 = document.createElement("i");
-        this.BankyRightLogoIconElement2.classList = "fa-solid fa-mug-hot";
-
-        this.BankyBankrekeningElement2 = document.createElement("h4");
-        this.BankyBankrekeningElement2.classList = "banky__nameOfAccount";
-        this.BankyBankrekeningElement2.innerText = "ZZP-Rekening";
+        // this.BankyBankrekeningElement2 = document.createElement("h4");
+        // this.BankyBankrekeningElement2.classList = "banky__nameOfAccount";
+        // this.BankyBankrekeningElement2.innerText = "ZZP-Rekening";
     }
+
+    makeButtonsFromData(data) {
+        Object.entries(data).forEach((entry) => {
+            this.BankyAccountElement = document.createElement("li");
+            this.BankyAccountElement.classList = "banky__account";
+
+            this.SwitchAccountButtonElement = document.createElement("button");
+            this.SwitchAccountButtonElement.classList = "banky__switchAccount";
+
+            this.BankyRightLogoElement = document.createElement("figure");
+            this.BankyRightLogoElement.classList = "banky__logo";
+
+            this.BankyRightLogoIconElement = document.createElement("i");
+            this.BankyRightLogoIconElement.classList = "fa-solid fa-house";
+
+            this.BankyBankrekeningElement = document.createElement("h4");
+            this.BankyBankrekeningElement.classList = "banky__nameOfAccount";
+            this.BankyBankrekeningElement.innerText = entry[0];
+
+            this.bankyAccountsElement.appendChild(this.BankyAccountElement);
+            this.BankyAccountElement.appendChild(this.SwitchAccountButtonElement);
+            this.SwitchAccountButtonElement.appendChild(this.BankyRightLogoElement);
+            this.BankyRightLogoElement.appendChild(this.BankyRightLogoIconElement);
+            this.BankyAccountElement.appendChild(this.BankyBankrekeningElement);
+            console.log(entry[0]);
+        })
+    }
+
     render() {
         this.mainElement.appendChild(this.rightSectionElement);
         this.rightSectionElement.appendChild(this.bankyAccountsElement);
-        this.bankyAccountsElement.appendChild(this.BankyAccountElement);
-        this.BankyAccountElement.appendChild(this.SwitchAccountButtonElement);
-        this.SwitchAccountButtonElement.appendChild(this.BankyRightLogoElement);
-        this.BankyRightLogoElement.appendChild(this.BankyRightLogoIconElement);
-        this.BankyAccountElement.appendChild(this.BankyBankrekeningElement);
-        this.bankyAccountsElement.appendChild(this.BankyAccountElement2);
-        this.BankyAccountElement2.appendChild(this.SwitchAccountButtonElement2);
-        this.SwitchAccountButtonElement2.appendChild(this.BankyRightLogoElement2);
-        this.BankyRightLogoElement2.appendChild(this.BankyRightLogoIconElement2);
-        this.BankyAccountElement2.appendChild(this.BankyBankrekeningElement2);
+        // this.bankyAccountsElement.appendChild(this.BankyAccountElement2);
+        // this.BankyAccountElement2.appendChild(this.SwitchAccountButtonElement2);
+        // this.SwitchAccountButtonElement2.appendChild(this.BankyRightLogoElement2);
+        // this.BankyRightLogoElement2.appendChild(this.BankyRightLogoIconElement2);
+        // this.BankyAccountElement2.appendChild(this.BankyBankrekeningElement2);
     }
 }
 
-const banky = new BankyMain("body");
-banky.render();
+class App {
+    bankyHeader;
+    bankyMain;
+    GetDataFromApi;
+
+    constructor() {
+        this.header = new Header("body");
+        this.bankyMain = new BankyMain("body");
+
+        this.GetDataFromApi = new GetDataFromApi("./data/transactions.json");
+        this.GetDataFromApi
+            .getData().then((data) => {
+                this.bankyMain.makeTransactionsFromData(data);
+                this.bankyMain.makeButtonsFromData(data);
+            });
+
+        this.header.render();
+        this.bankyMain.render();
+    }
+}
+
+const app = new App();

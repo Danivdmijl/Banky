@@ -10,11 +10,39 @@
         },
         {
             "from/to": "Danilo",
-            "amouth": -100
+            "amouth": 1009
+        },
+        {
+            "from/to": "Sam",
+            "amouth": -20
         },
         {
             "from/to": "Jeroen",
             "amouth": -20
+        },
+        {
+            "from/to": "Jeroen",
+            "amouth": -20
+        },
+        {
+            "from/to": "Jeroen",
+            "amouth": -20
+        },
+        {
+            "from/to": "Jeroen",
+            "amouth": -20
+        },
+        {
+            "from/to": "Jeroen",
+            "amouth": -20
+        },
+        {
+            "from/to": "Jeroen",
+            "amouth": -20
+        },
+        {
+            "from/to": "Jeroen",
+            "amouth": 500
         }
     ],
     "ZZP-Rekening": [
@@ -27,4 +55,5 @@
             "amouth": -500
         }
     ]
+    
 }
