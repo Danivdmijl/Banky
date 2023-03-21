@@ -170,6 +170,9 @@ body {
   align-items: center;
   gap: 1rem;
 }
+.banky__account:Hover {
+  cursor: pointer;
+}
 .banky__nameOfAccount {
   font-weight: 400;
   font-size: 120%;

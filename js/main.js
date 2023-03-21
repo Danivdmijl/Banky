@@ -7,7 +7,6 @@ class GetDataFromApi {
     }
 
     async getData() {
-        console.log("Ik haal de data op");
         await fetch(this.url)
             .then(function (response) {
                 return response.json();
@@ -214,6 +213,9 @@ class BankyRightSection {
         Object.entries(data).forEach((entry) => {
             this.BankyAccountElement = document.createElement("li");
             this.BankyAccountElement.classList = "banky__account";
+            this.BankyAccountElement.onclick = () => {
+                console.log(entry);
+            }
 
             this.SwitchAccountButtonElement = document.createElement("button");
             this.SwitchAccountButtonElement.classList = "banky__switchAccount";
@@ -233,7 +235,6 @@ class BankyRightSection {
             this.SwitchAccountButtonElement.appendChild(this.BankyRightLogoElement);
             this.BankyRightLogoElement.appendChild(this.BankyRightLogoIconElement);
             this.BankyAccountElement.appendChild(this.BankyBankrekeningElement);
-            console.log(entry[0]);
         })
     }
 
