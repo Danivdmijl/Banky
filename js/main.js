@@ -81,7 +81,7 @@ class BankyMain {
         this.mainElement.classList = "banky";
 
         this.leftSection = new BankyLeftSection(this.mainElement);
-        this.rightSection = new BankyRightSection(this.mainElement);
+        this.rightSection = new BankyRightSection(this.mainElement, this);
 
     }
 
@@ -90,7 +90,11 @@ class BankyMain {
     }
 
     makeTransactionsFromData(data) {
-        this.leftSection.makeTransactionsFromData("Bankrekening", data);
+        this.leftSection.makeTransactionsFromData(Object.entries(data)[0][0],data);
+    }
+
+    callFromRightSection(account,data) {
+        this.leftSection.makeTransactionsFromData(account, data);
     }
 
     render() {
@@ -144,6 +148,7 @@ class BankyLeftSection {
         
         this.bankyLogoText.innerText = "Saldo " + "€" + totalMoney;
 
+        this.transactionsElement.innerHTML = "";
 
         for (let i = 0; i < data[accountToShow].length; i++) {
             this.transactionElement = document.createElement("li");
@@ -162,59 +167,50 @@ class BankyLeftSection {
             this.transactionElement.appendChild(this.transactionAmount);
         }
 
-        this.transferButton = document.createElement("button");
-        this.transferButton.classList = "banky__transferButton";
-        this.transferButton.innerText = "Overboeken";
-        this.leftSectionElement.appendChild(this.transferButton);
-
     }
     render() {
         this.mainElement.appendChild(this.leftSectionElement);
+
         this.leftSectionElement.appendChild(this.bankyHeaderElement);
         this.bankyHeaderElement.appendChild(this.bankyHeaderWrapElement);
         this.bankyHeaderWrapElement.appendChild(this.bankyLogoElement);
         this.bankyLogoElement.appendChild(this.bankyLogoIElement);
         this.bankyHeaderWrapElement.appendChild(this.bankyLogoText);
         this.bankyHeaderWrapElement.appendChild(this.eyeButton);
+
         this.eyeButton.appendChild(this.eyeFigure);
         this.eyeFigure.appendChild(this.eyeI);
         this.leftSectionElement.appendChild(this.transactionsElement);
+        
+        this.transferButton = document.createElement("button");
+        this.transferButton.classList = "banky__transferButton";
+        this.transferButton.innerText = "Overboeken";
+        this.leftSectionElement.appendChild(this.transferButton);
     }
 }
 
 class BankyRightSection {
     mainElement;
-    constructor(mainElement) {
+    bankyMain;
+    constructor(mainElement, bankyMain) {
         this.mainElement = mainElement;
+        this.bankyMain = bankyMain;
+
+
         this.rightSectionElement = document.createElement("section");
         this.rightSectionElement.classList = "banky__section bankt__section--right";
 
         this.bankyAccountsElement = document.createElement("ul");
         this.bankyAccountsElement.classList = "banky__accounts";
-
-        // this.BankyAccountElement2 = document.createElement("li");
-        // this.BankyAccountElement2.classList = "banky__account";
-
-        // this.SwitchAccountButtonElement2 = document.createElement("button");
-        // this.SwitchAccountButtonElement2.classList = "banky__switchAccount";
-
-        // this.BankyRightLogoElement2 = document.createElement("figure");
-        // this.BankyRightLogoElement2.classList = "banky__logo";
-
-        // this.BankyRightLogoIconElement2 = document.createElement("i");
-        // this.BankyRightLogoIconElement2.classList = "fa-solid fa-mug-hot";
-
-        // this.BankyBankrekeningElement2 = document.createElement("h4");
-        // this.BankyBankrekeningElement2.classList = "banky__nameOfAccount";
-        // this.BankyBankrekeningElement2.innerText = "ZZP-Rekening";
     }
 
     makeButtonsFromData(data) {
-        Object.entries(data).forEach((entry) => {
+            Object.entries(data).forEach((entry) => {
+
             this.BankyAccountElement = document.createElement("li");
             this.BankyAccountElement.classList = "banky__account";
             this.BankyAccountElement.onclick = () => {
-                console.log(entry);
+                this.bankyMain.callFromRightSection(entry[0],data);
             }
 
             this.SwitchAccountButtonElement = document.createElement("button");
