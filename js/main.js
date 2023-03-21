@@ -124,10 +124,10 @@ class BankyLeftSection {
 
         this.bankyLogoText = document.createElement("h1");
         this.bankyLogoText.classList = "banky__money";
-        this.bankyLogoText.innerText = "Saldo 10"
 
         this.eyeButton = document.createElement("button");
         this.eyeButton.classList = "banky__eyeButton";
+        this.eyeButton.onclick = this.eyeButtonClicked;
 
         this.eyeFigure = document.createElement("figure");
         this.eyeFigure.classList = "banky__eye";
@@ -137,6 +137,11 @@ class BankyLeftSection {
 
         this.transactionsElement = document.createElement("ul");
         this.transactionsElement.classList = "banky__transactions";
+    }
+
+    eyeButtonClicked = () => {
+        this.transactionsElement.classList.toggle("banky__transactions--blur");
+        this.bankyLogoText.classList.toggle("banky__money--blur");
     }
 
     makeTransactionsFromData(accountToShow, data) {
@@ -205,43 +210,44 @@ class BankyRightSection {
     }
 
     makeButtonsFromData(data) {
-            Object.entries(data).forEach((entry) => {
-
-            this.BankyAccountElement = document.createElement("li");
-            this.BankyAccountElement.classList = "banky__account";
-            this.BankyAccountElement.onclick = () => {
-                this.bankyMain.callFromRightSection(entry[0],data);
+        Object.entries(data).forEach((entry) => {
+            const accountName = entry[0];
+            const accountTransactions = entry[1];
+            const accountLogo = accountTransactions.length > 0 && accountTransactions[0].logo ? accountTransactions[0].logo : 'house';
+    
+            const BankyAccountElement = document.createElement("li");
+            BankyAccountElement.classList = "banky__account";
+            BankyAccountElement.onclick = () => {
+                this.bankyMain.callFromRightSection(accountName, data);
             }
-
-            this.SwitchAccountButtonElement = document.createElement("button");
-            this.SwitchAccountButtonElement.classList = "banky__switchAccount";
-
-            this.BankyRightLogoElement = document.createElement("figure");
-            this.BankyRightLogoElement.classList = "banky__logo";
-
-            this.BankyRightLogoIconElement = document.createElement("i");
-            this.BankyRightLogoIconElement.classList = "fa-solid fa-house";
-
-            this.BankyBankrekeningElement = document.createElement("h4");
-            this.BankyBankrekeningElement.classList = "banky__nameOfAccount";
-            this.BankyBankrekeningElement.innerText = entry[0];
-
-            this.bankyAccountsElement.appendChild(this.BankyAccountElement);
-            this.BankyAccountElement.appendChild(this.SwitchAccountButtonElement);
-            this.SwitchAccountButtonElement.appendChild(this.BankyRightLogoElement);
-            this.BankyRightLogoElement.appendChild(this.BankyRightLogoIconElement);
-            this.BankyAccountElement.appendChild(this.BankyBankrekeningElement);
-        })
+    
+            const SwitchAccountButtonElement = document.createElement("button");
+            SwitchAccountButtonElement.classList = "banky__switchAccount";
+    
+            const BankyRightLogoElement = document.createElement("figure");
+            BankyRightLogoElement.classList = "banky__logo";
+    
+            const BankyRightLogoIconElement = document.createElement("i");
+            BankyRightLogoIconElement.classList = `fa-${accountLogo} fa-solid`;
+    
+            const BankyBankrekeningElement = document.createElement("h4");
+            BankyBankrekeningElement.classList = "banky__nameOfAccount";
+            BankyBankrekeningElement.innerText = accountName;
+    
+            this.bankyAccountsElement.appendChild(BankyAccountElement);
+            BankyAccountElement.appendChild(SwitchAccountButtonElement);
+            SwitchAccountButtonElement.appendChild(BankyRightLogoElement);
+            BankyRightLogoElement.appendChild(BankyRightLogoIconElement);
+            BankyAccountElement.appendChild(BankyBankrekeningElement);
+        });
     }
+    
+      
+      
 
     render() {
         this.mainElement.appendChild(this.rightSectionElement);
         this.rightSectionElement.appendChild(this.bankyAccountsElement);
-        // this.bankyAccountsElement.appendChild(this.BankyAccountElement2);
-        // this.BankyAccountElement2.appendChild(this.SwitchAccountButtonElement2);
-        // this.SwitchAccountButtonElement2.appendChild(this.BankyRightLogoElement2);
-        // this.BankyRightLogoElement2.appendChild(this.BankyRightLogoIconElement2);
-        // this.BankyAccountElement2.appendChild(this.BankyBankrekeningElement2);
     }
 }
 

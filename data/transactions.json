@@ -2,7 +2,8 @@
     "Bankrekening": [
         {
             "from/to": "Dani",
-            "amouth": 10
+            "amouth": 10,
+            "logo": "house"
         },
         {
             "from/to": "Ian",
@@ -12,7 +13,7 @@
             "from/to": "Danilo",
             "amouth": 1009
         },
-        {
+        {   
             "from/to": "Sam",
             "amouth": -20
         },
@@ -48,12 +49,24 @@
     "ZZP-Rekening": [
         {
             "from/to": "Bedrijf X",
-            "amouth": 10000
+            "amouth": 10000,
+            "logo": "sack-dollar"
         },
         {
             "from/to": "Bedrijf Z",
             "amouth": -500
         }
+    ],
+
+    "ZZP-Rekening3": [
+        {
+            "from/to": "Media College",
+            "amouth": -10000,
+            "logo": "building"
+        },
+        {
+            "from/to": "Duo",
+            "amouth": 50000
+        }
     ]
-    
 }

@@ -1,6 +1,7 @@
 @use "../../abstracts/vars";
 @use "../../abstracts/colors";
 @use "../../abstracts/mixins";
+@use "../../abstracts/animations";
 
 .banky{
     background: map-get(colors.$baseColors, "whiteColor");
@@ -11,9 +12,9 @@
     max-width: 150rem;
     margin: 0 auto;
 
+
     &__section{
         display: flex;
-
         &--left{
             flex-direction: column;
             justify-content: space-between;
@@ -36,6 +37,10 @@
     &__money{
         font-weight: 400;
         font-size: 250%;
+
+        &--blur{
+            @include mixins.blur;
+        }
     }
 
     &__logo{
@@ -49,7 +54,11 @@
         align-items: center;
         color: map-get(colors.$baseColors, "whiteColor");
         box-shadow: vars.$box-shadow;
-        transition: 0.2s all;
+        transition: all 0.3s ease;
+
+        &:active {
+            transform: scale(0.90);
+          }
     }
 
     &__eye{
@@ -74,6 +83,10 @@
         gap: 2rem;
         height: 50rem;
         overflow-y: scroll;
+
+        &--blur{
+            @include mixins.blur;
+        }
     }
 
     &__transaction{
@@ -83,6 +96,8 @@
         justify-content: space-between;
         position: relative;
         padding-bottom: 0.5rem;
+        @include animations.popupMixin;
+
 
         &::after{
             @include mixins.afterStyle;
@@ -123,6 +138,8 @@
         align-items: center;
         gap: 4rem;
         justify-content: center;
+        @include animations.popupMixin;
+
     }
 
     &__switchAccount, &__eyeButton{
@@ -142,6 +159,7 @@
         display:flex;
         align-items: center;
         gap: 1rem;
+        width:22rem;
 
         &:Hover{
             cursor: pointer;
